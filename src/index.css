@@ -8,7 +8,7 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Light theme - clean and modern */
+    /* Light theme - clwhaean and modern */
     --background: 0 0% 100%;
     --foreground: 222 84% 4.9%;
 
@@ -83,7 +83,7 @@ All colors MUST be HSL.
     --popover-foreground: 210 40% 98%;
 
     /* Softer teal primary with better harmony */
-    --primary: 180 65% 65%;
+    --primary: 252 94% 75%;       
     --primary-foreground: 219 15% 8%;
 
     --secondary: 219 20% 16%;
@@ -103,21 +103,21 @@ All colors MUST be HSL.
     --ring: 180 65% 65%;
 
     /* Enhanced design tokens with smoother transitions */
-    --primary-glow: 180 75% 75%;
+    --primary-glow: 252 100% 75%;
     --surface: 219 15% 10%;
     --surface-elevated: 219 15% 13%;
     --text-muted: 215 20% 70%;
     --text-subtle: 215 16% 50%;
     
     /* More harmonious gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(180 65% 65%), hsl(180 75% 75%));
+    --gradient-primary: linear-gradient(135deg, hsl(252 95% 75%), hsl(189, 62%, 68%));
     --gradient-surface: linear-gradient(145deg, hsl(219 15% 11%) 0%, hsl(219 15% 14%) 100%);
     --gradient-card: linear-gradient(145deg, hsl(219 15% 11%) 0%, hsl(219 20% 14%) 100%);
     
     /* Softer shadows */
-    --shadow-card: 0 4px 6px -1px hsl(219 15% 5% / 0.25), 0 2px 4px -1px hsl(219 15% 5% / 0.06);
+    --shadow-card: 0 4px 6px -1px hsl(219 15% 5% / 0.25), 0 2px 4px -1px hsla(73, 30%, 39%, 0.06);
     --shadow-elevated: 0 10px 15px -3px hsl(219 15% 5% / 0.35), 0 4px 6px -2px hsl(219 15% 5% / 0.1);
-    --shadow-glow: 0 0 20px hsl(180 65% 65% / 0.25);
+    --shadow-glow: 0 0 20px hsl(252 94% 75% / 0.25);
 
     --sidebar-background: 219 15% 8%;
     --sidebar-foreground: 210 40% 98%;
