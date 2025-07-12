@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { Search, User, MessageSquare, Settings, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { useAuth } from "@/context/AuthContext";
 import { cn } from "@/lib/utils";
 
 const navItems = [
@@ -15,6 +16,7 @@ const navItems = [
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
+  const { isLoggedIn, logout } = useAuth();
 
   return (
     <>
@@ -52,9 +54,15 @@ export function Navigation() {
         
         <div className="flex items-center gap-2">
           <ThemeToggle />
-          <Button variant="outline" asChild>
-            <Link to="/login">Login</Link>
-          </Button>
+          {isLoggedIn ? (
+            <Button variant="outline" onClick={logout}>
+              Logout
+            </Button>
+          ) : (
+            <Button variant="outline" asChild>
+              <Link to="/login">Login</Link>
+            </Button>
+          )}
         </div>
       </nav>
 
@@ -102,9 +110,18 @@ export function Navigation() {
                   </Button>
                 );
               })}
-              <Button variant="outline" size="sm" asChild className="mt-2">
-                <Link to="/login" onClick={() => setIsOpen(false)}>Login</Link>
-              </Button>
+              {isLoggedIn ? (
+                <Button variant="outline" size="sm" onClick={() => {
+                  logout();
+                  setIsOpen(false);
+                }} className="mt-2">
+                  Logout
+                </Button>
+              ) : (
+                <Button variant="outline" size="sm" asChild className="mt-2">
+                  <Link to="/login" onClick={() => setIsOpen(false)}>Login</Link>
+                </Button>
+              )}
             </div>
           </div>
         )}

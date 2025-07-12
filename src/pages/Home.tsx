@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Navigation } from "@/components/Navigation";
 import { SearchFilters } from "@/components/SearchFilters";
 import { EnhancedUserProfileCard } from "@/components/EnhancedUserProfileCard";
+import { DetailedUserProfileModal } from "@/components/DetailedUserProfileModal";
 import { useToast } from "@/hooks/use-toast";
 
 // Enhanced mock data with portfolio and validation
@@ -10,6 +11,7 @@ const mockUsers = [
     id: "1",
     name: "Marc Demo",
     location: "San Francisco, CA",
+    timezone: "PST (UTC-8)",
     avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face",
     rating: 3.4,
     skillsOffered: [
@@ -49,6 +51,7 @@ const mockUsers = [
     id: "2", 
     name: "Michell",
     location: "New York, NY",
+    timezone: "EST (UTC-5)",
     avatar: "https://images.unsplash.com/photo-1494790108755-2616b612345d?w=150&h=150&fit=crop&crop=face",
     rating: 2.5,
     skillsOffered: [
@@ -69,6 +72,7 @@ const mockUsers = [
     id: "3",
     name: "Joe Wills", 
     location: "Austin, TX",
+    timezone: "CST (UTC-6)",
     avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face",
     rating: 4.0,
     skillsOffered: [
@@ -86,6 +90,7 @@ const mockUsers = [
     id: "4",
     name: "Sarah Chen",
     location: "Seattle, WA", 
+    timezone: "PST (UTC-8)",
     avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face",
     rating: 4.8,
     skillsOffered: [
@@ -132,6 +137,8 @@ const mockUsers = [
 
 export default function Home() {
   const [filteredUsers, setFilteredUsers] = useState(mockUsers);
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const { toast } = useToast();
 
   const handleSearch = (query: string) => {
@@ -171,12 +178,19 @@ export default function Home() {
     setFilteredUsers(filtered);
   };
 
+  const handleConnectClick = (userId: string) => {
+    const user = mockUsers.find(u => u.id === userId);
+    setSelectedUser(user);
+    setIsModalOpen(true);
+  };
+
   const handleRequestSwap = (userId: string) => {
     const user = mockUsers.find(u => u.id === userId);
     toast({
       title: "Swap Request Sent",
       description: `Your request has been sent to ${user?.name}. They'll be notified and can respond in their requests tab.`,
     });
+    setIsModalOpen(false);
   };
 
   return (
@@ -205,7 +219,7 @@ export default function Home() {
                 <EnhancedUserProfileCard
                   key={user.id}
                   user={user}
-                  onRequestSwap={handleRequestSwap}
+                  onConnectClick={handleConnectClick}
                 />
               ))
             ) : (
@@ -238,6 +252,14 @@ export default function Home() {
             </div>
           </div>
         </div>
+
+        {/* Detailed User Profile Modal */}
+        <DetailedUserProfileModal
+          user={selectedUser}
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          onRequestSwap={handleRequestSwap}
+        />
       </main>
     </div>
   );

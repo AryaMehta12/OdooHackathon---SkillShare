@@ -4,12 +4,14 @@ import { Navigation } from "@/components/Navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useAuth } from "@/context/AuthContext";
 import { useToast } from "@/hooks/use-toast";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const { login } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -20,6 +22,7 @@ export default function Login() {
     // Simulate login API call
     setTimeout(() => {
       setIsLoading(false);
+      login({ email, name: email.split('@')[0] });
       toast({
         title: "Welcome back!",
         description: "You've been successfully logged in.",

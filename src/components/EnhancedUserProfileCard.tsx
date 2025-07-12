@@ -2,8 +2,7 @@ import { Star, MapPin, Github, Linkedin, Globe, ExternalLink } from "lucide-reac
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { SkillsSection } from "./SkillsSection";
-import { PortfolioSection } from "./PortfolioSection";
+import { SkillTag } from "./SkillTag";
 import { cn } from "@/lib/utils";
 
 interface Skill {
@@ -34,6 +33,7 @@ interface EnhancedUserProfileCardProps {
     id: string;
     name: string;
     location?: string;
+    timezone?: string;
     avatar?: string;
     rating: number;
     skillsOffered: Skill[];
@@ -43,11 +43,11 @@ interface EnhancedUserProfileCardProps {
     portfolio?: PortfolioItem[];
     socialLinks?: SocialLink[];
   };
-  onRequestSwap?: (userId: string) => void;
+  onConnectClick?: (userId: string) => void;
   className?: string;
 }
 
-export function EnhancedUserProfileCard({ user, onRequestSwap, className }: EnhancedUserProfileCardProps) {
+export function EnhancedUserProfileCard({ user, onConnectClick, className }: EnhancedUserProfileCardProps) {
   const initials = user.name
     .split(" ")
     .map(n => n[0])
@@ -70,7 +70,7 @@ export function EnhancedUserProfileCard({ user, onRequestSwap, className }: Enha
 
   return (
     <Card className={cn(
-      "bg-card border-border hover:border-primary/20 transition-all duration-300 hover:shadow-lg group overflow-hidden",
+      "bg-card border-border hover:border-primary/20 transition-all duration-300 hover:shadow-lg group overflow-hidden cursor-pointer",
       className
     )}>
       <CardContent className="p-6">
@@ -100,10 +100,13 @@ export function EnhancedUserProfileCard({ user, onRequestSwap, className }: Enha
                 <Button 
                   variant="default" 
                   size="sm"
-                  onClick={() => onRequestSwap?.(user.id)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onConnectClick?.(user.id);
+                  }}
                   className="shrink-0"
                 >
-                  Request
+                  Connect
                 </Button>
               </div>
             </div>
@@ -118,16 +121,9 @@ export function EnhancedUserProfileCard({ user, onRequestSwap, className }: Enha
                   {user.rating.toFixed(1)}
                 </span>
               </div>
-              {user.availability && (
-                <span className="text-xs text-muted-foreground px-3 py-1 bg-muted/50 rounded-full">
-                  {user.availability}
-                </span>
-              )}
-            </div>
-
-            {/* Social Links */}
-            {user.socialLinks && user.socialLinks.length > 0 && (
-              <div className="flex items-center gap-1">
+              {/* Social Links */}
+              {user.socialLinks && user.socialLinks.length > 0 && (
+                <div className="flex items-center gap-1">
                 {user.socialLinks.map((link, index) => (
                   <Button
                     key={index}
@@ -135,6 +131,7 @@ export function EnhancedUserProfileCard({ user, onRequestSwap, className }: Enha
                     size="sm"
                     className="h-8 w-8 p-0"
                     asChild
+                    onClick={(e) => e.stopPropagation()}
                   >
                     <a 
                       href={link.url} 
@@ -146,39 +143,26 @@ export function EnhancedUserProfileCard({ user, onRequestSwap, className }: Enha
                     </a>
                   </Button>
                 ))}
-              </div>
-            )}
+                </div>
+              )}
+            </div>
           </div>
 
-          {/* Bio */}
-          {user.bio && (
-            <p className="text-sm text-muted-foreground leading-relaxed line-clamp-2">
-              {user.bio}
-            </p>
-          )}
-
-          {/* Portfolio Section */}
-          {user.portfolio && user.portfolio.length > 0 && (
-            <PortfolioSection 
-              items={user.portfolio} 
-              maxItems={2}
-              collapsible={true}
-            />
-          )}
-          
           {/* Skills */}
-          <div className="space-y-3">
-            <SkillsSection
-              title="Skills Offered"
-              skills={user.skillsOffered}
-              variant="offered"
-            />
-            
-            <SkillsSection
-              title="Skills Wanted"
-              skills={user.skillsWanted}
-              variant="wanted"
-            />
+          <div>
+            <span className="text-sm font-medium text-primary mb-2 block">
+              Skills Offered
+            </span>
+            <div className="flex flex-wrap gap-1">
+              {user.skillsOffered.slice(0, 3).map((skill) => (
+                <SkillTag key={skill.name} skill={skill.name} variant="offered" />
+              ))}
+              {user.skillsOffered.length > 3 && (
+                <span className="text-xs text-muted-foreground px-2 py-1 bg-muted/50 rounded-full">
+                  +{user.skillsOffered.length - 3} more
+                </span>
+              )}
+            </div>
           </div>
         </div>
       </CardContent>
