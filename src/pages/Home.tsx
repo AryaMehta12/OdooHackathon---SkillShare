@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { Navigation } from "@/components/Navigation";
 import { SearchFilters } from "@/components/SearchFilters";
-import { UserProfileCard } from "@/components/UserProfileCard";
+import { EnhancedUserProfileCard } from "@/components/EnhancedUserProfileCard";
 import { useToast } from "@/hooks/use-toast";
 
-// Mock data
+// Enhanced mock data with portfolio and validation
 const mockUsers = [
   {
     id: "1",
@@ -12,10 +12,38 @@ const mockUsers = [
     location: "San Francisco, CA",
     avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face",
     rating: 3.4,
-    skillsOffered: ["Java Script", "Python"],
-    skillsWanted: ["Photoshop", "Graphic designer"],
+    skillsOffered: [
+      { name: "JavaScript", validation: { type: "peer-endorsed" as const, count: 12 } },
+      { name: "Python", validation: { type: "verified" as const } }
+    ],
+    skillsWanted: [
+      { name: "Photoshop" },
+      { name: "Graphic Design", validation: { type: "peer-endorsed" as const, count: 3 } }
+    ],
     availability: "weekends",
-    bio: "Full-stack developer with a passion for clean code and user experience. I love teaching JavaScript fundamentals and building web applications."
+    bio: "Full-stack developer with a passion for clean code and user experience. I love teaching JavaScript fundamentals and building web applications.",
+    portfolio: [
+      {
+        id: "p1",
+        title: "E-commerce Platform",
+        description: "Built with React and Node.js, serving 10k+ users",
+        thumbnail: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=100&h=100&fit=crop",
+        link: "https://github.com/demo",
+        type: "project" as const,
+        skills: ["React", "Node.js", "MongoDB"]
+      },
+      {
+        id: "p2",
+        title: "JavaScript Tutorial Series",
+        description: "Educational content for beginners",
+        type: "video" as const,
+        skills: ["JavaScript", "Teaching"]
+      }
+    ],
+    socialLinks: [
+      { type: "github" as const, url: "https://github.com/marcdemo" },
+      { type: "portfolio" as const, url: "https://marcdemo.dev" }
+    ]
   },
   {
     id: "2", 
@@ -23,10 +51,19 @@ const mockUsers = [
     location: "New York, NY",
     avatar: "https://images.unsplash.com/photo-1494790108755-2616b612345d?w=150&h=150&fit=crop&crop=face",
     rating: 2.5,
-    skillsOffered: ["Java Script", "Python"],
-    skillsWanted: ["Photoshop", "Graphic designer"],
+    skillsOffered: [
+      { name: "JavaScript" },
+      { name: "Python", validation: { type: "certified" as const } }
+    ],
+    skillsWanted: [
+      { name: "Photoshop" },
+      { name: "Graphic Design" }
+    ],
     availability: "evenings",
-    bio: "Backend engineer specializing in Python and API development. Always eager to learn creative skills and expand my design knowledge."
+    bio: "Backend engineer specializing in Python and API development. Always eager to learn creative skills and expand my design knowledge.",
+    socialLinks: [
+      { type: "github" as const, url: "https://github.com/michell" }
+    ]
   },
   {
     id: "3",
@@ -34,8 +71,14 @@ const mockUsers = [
     location: "Austin, TX",
     avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face",
     rating: 4.0,
-    skillsOffered: ["Java Script", "Python"],
-    skillsWanted: ["Photoshop", "Graphic designer"],
+    skillsOffered: [
+      { name: "JavaScript", validation: { type: "peer-endorsed" as const, count: 8 } },
+      { name: "Python" }
+    ],
+    skillsWanted: [
+      { name: "Photoshop" },
+      { name: "Graphic Design" }
+    ],
     availability: "flexible",
     bio: "Software consultant who enjoys mentoring others. I believe in learning through practical projects and collaborative problem-solving."
   },
@@ -45,32 +88,45 @@ const mockUsers = [
     location: "Seattle, WA", 
     avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face",
     rating: 4.8,
-    skillsOffered: ["React", "Design", "UI/UX"],
-    skillsWanted: ["Photography", "Marketing"],
+    skillsOffered: [
+      { name: "React", validation: { type: "verified" as const } },
+      { name: "Design", validation: { type: "peer-endorsed" as const, count: 24 } },
+      { name: "UI/UX", validation: { type: "certified" as const } }
+    ],
+    skillsWanted: [
+      { name: "Photography" },
+      { name: "Marketing" }
+    ],
     availability: "weekends",
-    bio: "Senior product designer with 7+ years in tech. I love creating intuitive interfaces and would love to learn photography for better visual storytelling."
-  },
-  {
-    id: "5",
-    name: "Alex Rodriguez",
-    location: "Los Angeles, CA",
-    avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face", 
-    rating: 4.2,
-    skillsOffered: ["Photography", "Video Editing"],
-    skillsWanted: ["Web Development", "SEO"],
-    availability: "evenings",
-    bio: "Professional photographer and content creator. I specialize in portrait and event photography and want to build my own website to showcase my work."
-  },
-  {
-    id: "6",
-    name: "Emma Thompson",
-    location: "Boston, MA",
-    avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&h=150&fit=crop&crop=face",
-    rating: 4.6,
-    skillsOffered: ["Writing", "Content Strategy"],
-    skillsWanted: ["Graphic Design", "Branding"],
-    availability: "flexible",
-    bio: "Content strategist and copywriter for tech startups. I help brands tell their stories and would love to learn design to create more compelling visual content."
+    bio: "Senior product designer with 7+ years in tech. I love creating intuitive interfaces and would love to learn photography for better visual storytelling.",
+    portfolio: [
+      {
+        id: "p3",
+        title: "Mobile Banking App",
+        description: "Award-winning fintech interface design",
+        thumbnail: "https://images.unsplash.com/photo-1512486130939-2c4f79935e4f?w=100&h=100&fit=crop",
+        type: "design" as const,
+        skills: ["UI/UX", "Mobile Design"]
+      },
+      {
+        id: "p4",
+        title: "Design System",
+        description: "Comprehensive component library",
+        type: "design" as const,
+        skills: ["Design Systems", "React"]
+      },
+      {
+        id: "p5",
+        title: "User Research Case Study",
+        description: "Complete UX methodology documentation",
+        type: "project" as const,
+        skills: ["User Research", "UX"]
+      }
+    ],
+    socialLinks: [
+      { type: "portfolio" as const, url: "https://sarahchen.design" },
+      { type: "linkedin" as const, url: "https://linkedin.com/in/sarahchen" }
+    ]
   }
 ];
 
@@ -86,9 +142,9 @@ export default function Home() {
 
     const filtered = mockUsers.filter(user => 
       user.name.toLowerCase().includes(query.toLowerCase()) ||
-      user.location.toLowerCase().includes(query.toLowerCase()) ||
-      user.skillsOffered.some(skill => skill.toLowerCase().includes(query.toLowerCase())) ||
-      user.skillsWanted.some(skill => skill.toLowerCase().includes(query.toLowerCase()))
+      user.location?.toLowerCase().includes(query.toLowerCase()) ||
+      user.skillsOffered.some(skill => skill.name.toLowerCase().includes(query.toLowerCase())) ||
+      user.skillsWanted.some(skill => skill.name.toLowerCase().includes(query.toLowerCase()))
     );
     setFilteredUsers(filtered);
   };
@@ -98,8 +154,8 @@ export default function Home() {
 
     if (filters.skill) {
       filtered = filtered.filter(user =>
-        user.skillsOffered.some(skill => skill.toLowerCase().includes(filters.skill.toLowerCase())) ||
-        user.skillsWanted.some(skill => skill.toLowerCase().includes(filters.skill.toLowerCase()))
+        user.skillsOffered.some(skill => skill.name.toLowerCase().includes(filters.skill.toLowerCase())) ||
+        user.skillsWanted.some(skill => skill.name.toLowerCase().includes(filters.skill.toLowerCase()))
       );
     }
 
@@ -146,7 +202,7 @@ export default function Home() {
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3">
             {filteredUsers.length > 0 ? (
               filteredUsers.map(user => (
-                <UserProfileCard
+                <EnhancedUserProfileCard
                   key={user.id}
                   user={user}
                   onRequestSwap={handleRequestSwap}

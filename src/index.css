@@ -8,6 +8,70 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
+    /* Light theme - clean and modern */
+    --background: 0 0% 100%;
+    --foreground: 222 84% 4.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222 84% 4.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 84% 4.9%;
+
+    /* Softer primary for light mode */
+    --primary: 180 65% 45%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 222 47% 11%;
+
+    --muted: 210 40% 96%;
+    --muted-foreground: 215 16% 47%;
+
+    --accent: 180 65% 45%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 65% 50%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 180 65% 45%;
+
+    --radius: 0.75rem;
+
+    /* Light mode design tokens */
+    --primary-glow: 180 75% 55%;
+    --surface: 0 0% 98%;
+    --surface-elevated: 0 0% 95%;
+    --text-muted: 215 16% 47%;
+    --text-subtle: 215 20% 65%;
+    
+    /* Light mode gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(180 65% 45%), hsl(180 75% 55%));
+    --gradient-surface: linear-gradient(145deg, hsl(0 0% 100%) 0%, hsl(0 0% 98%) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%) 0%, hsl(210 40% 98%) 100%);
+    
+    /* Light mode shadows */
+    --shadow-card: 0 4px 6px -1px hsl(0 0% 0% / 0.1), 0 2px 4px -1px hsl(0 0% 0% / 0.06);
+    --shadow-elevated: 0 10px 15px -3px hsl(0 0% 0% / 0.15), 0 4px 6px -2px hsl(0 0% 0% / 0.05);
+    --shadow-glow: 0 0 20px hsl(180 65% 45% / 0.2);
+    
+    /* Smooth animations */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 222 84% 4.9%;
+    --sidebar-primary: 180 65% 45%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 210 40% 96%;
+    --sidebar-accent-foreground: 222 47% 11%;
+    --sidebar-border: 214 32% 91%;
+    --sidebar-ring: 180 65% 45%;
+  }
+
+  .dark {
     /* Dark theme with smoother color transitions */
     --background: 219 15% 8%;
     --foreground: 210 40% 98%;
@@ -38,8 +102,6 @@ All colors MUST be HSL.
     --input: 219 20% 18%;
     --ring: 180 65% 65%;
 
-    --radius: 0.75rem;
-
     /* Enhanced design tokens with smoother transitions */
     --primary-glow: 180 75% 75%;
     --surface: 219 15% 10%;
@@ -56,10 +118,6 @@ All colors MUST be HSL.
     --shadow-card: 0 4px 6px -1px hsl(219 15% 5% / 0.25), 0 2px 4px -1px hsl(219 15% 5% / 0.06);
     --shadow-elevated: 0 10px 15px -3px hsl(219 15% 5% / 0.35), 0 4px 6px -2px hsl(219 15% 5% / 0.1);
     --shadow-glow: 0 0 20px hsl(180 65% 65% / 0.25);
-    
-    /* Smooth animations */
-    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-bounce: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
     --sidebar-background: 219 15% 8%;
     --sidebar-foreground: 210 40% 98%;
@@ -69,29 +127,6 @@ All colors MUST be HSL.
     --sidebar-accent-foreground: 210 40% 98%;
     --sidebar-border: 219 20% 18%;
     --sidebar-ring: 180 65% 65%;
-  }
-
-  .dark {
-    /* Dark mode uses same harmonious colors */
-    --background: 219 15% 8%;
-    --foreground: 210 40% 98%;
-    --card: 219 15% 11%;
-    --card-foreground: 210 40% 98%;
-    --popover: 219 15% 11%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 180 65% 65%;
-    --primary-foreground: 219 15% 8%;
-    --secondary: 219 20% 16%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 219 20% 14%;
-    --muted-foreground: 215 20% 70%;
-    --accent: 180 65% 65%;
-    --accent-foreground: 219 15% 8%;
-    --destructive: 0 65% 55%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 219 20% 18%;
-    --input: 219 20% 18%;
-    --ring: 180 65% 65%;
   }
 }
 
