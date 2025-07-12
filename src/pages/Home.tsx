@@ -14,7 +14,8 @@ const mockUsers = [
     rating: 3.4,
     skillsOffered: ["Java Script", "Python"],
     skillsWanted: ["Photoshop", "Graphic designer"],
-    availability: "weekends"
+    availability: "weekends",
+    bio: "Full-stack developer with a passion for clean code and user experience. I love teaching JavaScript fundamentals and building web applications."
   },
   {
     id: "2", 
@@ -24,7 +25,8 @@ const mockUsers = [
     rating: 2.5,
     skillsOffered: ["Java Script", "Python"],
     skillsWanted: ["Photoshop", "Graphic designer"],
-    availability: "evenings"
+    availability: "evenings",
+    bio: "Backend engineer specializing in Python and API development. Always eager to learn creative skills and expand my design knowledge."
   },
   {
     id: "3",
@@ -34,7 +36,8 @@ const mockUsers = [
     rating: 4.0,
     skillsOffered: ["Java Script", "Python"],
     skillsWanted: ["Photoshop", "Graphic designer"],
-    availability: "flexible"
+    availability: "flexible",
+    bio: "Software consultant who enjoys mentoring others. I believe in learning through practical projects and collaborative problem-solving."
   },
   {
     id: "4",
@@ -44,7 +47,8 @@ const mockUsers = [
     rating: 4.8,
     skillsOffered: ["React", "Design", "UI/UX"],
     skillsWanted: ["Photography", "Marketing"],
-    availability: "weekends"
+    availability: "weekends",
+    bio: "Senior product designer with 7+ years in tech. I love creating intuitive interfaces and would love to learn photography for better visual storytelling."
   },
   {
     id: "5",
@@ -54,7 +58,8 @@ const mockUsers = [
     rating: 4.2,
     skillsOffered: ["Photography", "Video Editing"],
     skillsWanted: ["Web Development", "SEO"],
-    availability: "evenings"
+    availability: "evenings",
+    bio: "Professional photographer and content creator. I specialize in portrait and event photography and want to build my own website to showcase my work."
   },
   {
     id: "6",
@@ -64,7 +69,8 @@ const mockUsers = [
     rating: 4.6,
     skillsOffered: ["Writing", "Content Strategy"],
     skillsWanted: ["Graphic Design", "Branding"],
-    availability: "flexible"
+    availability: "flexible",
+    bio: "Content strategist and copywriter for tech startups. I help brands tell their stories and would love to learn design to create more compelling visual content."
   }
 ];
 
@@ -137,7 +143,7 @@ export default function Home() {
             onFilterChange={handleFilterChange}
           />
 
-          <div className="grid gap-4 md:gap-6">
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3">
             {filteredUsers.length > 0 ? (
               filteredUsers.map(user => (
                 <UserProfileCard
